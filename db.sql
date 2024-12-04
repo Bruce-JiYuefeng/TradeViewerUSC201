@@ -1,37 +1,56 @@
-DROP DATABASE IF EXISTS trade_journal;
-CREATE DATABASE IF NOT EXISTS trade_journal;
-USE trade_journal;
+-- Create the database
+CREATE DATABASE web_app;
 
-CREATE TABLE IF NOT EXISTS instruments (
-    instrument_id INT NOT NULL AUTO_INCREMENT, 
-    instrument_name VARCHAR(50) NOT NULL,
-    PRIMARY KEY(instrument_id)
+-- Use the created database
+USE web_app;
+
+-- Create the table for user credentials
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,        -- Unique ID for each user
+    username VARCHAR(255) NOT NULL UNIQUE,    -- Username (must be unique)
+    password_hash VARCHAR(255) NOT NULL,      -- Hashed password
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Record creation time
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP -- Record last update time
 );
 
-INSERT INTO instruments (instrument_id, instrument_name) VALUES
-(1, 'spy'),
-(2, 'qqq'),
-(3, 'nvda'),
-(4, 'amzn'),
-(5, 'goog');
-
-CREATE TABLE IF NOT EXISTS trades (
-    trade_id BIGINT NOT NULL AUTO_INCREMENT, 
-    instrument_id INT NOT NULL,
-    date_time DATETIME NOT NULL,	
-    buy_sell VARCHAR(4) NOT NULL,
-    quantity DECIMAL(8,2) NOT NULL,
-    price DECIMAL(12, 2) NOT NULL,
-    commissions DECIMAL(8, 2) NOT NULL,
-    pnl DECIMAL(15, 2),
-    PRIMARY KEY(trade_id),
-    FOREIGN KEY (instrument_id) REFERENCES instruments(instrument_id)
+-- Create the table for user profiles (linked to the users table)
+CREATE TABLE user_profiles (
+    id INT AUTO_INCREMENT PRIMARY KEY,        -- Unique ID for each profile
+    user_id INT NOT NULL,                     -- Foreign key to the users table
+    first_name VARCHAR(255),                  -- First name of the user
+    last_name VARCHAR(255),                   -- Last name of the user
+    email VARCHAR(255) NOT NULL UNIQUE,       -- Email (must be unique)
+    phone VARCHAR(20),                        -- Optional phone number
+    bio TEXT,                                 -- Optional bio for the user
+    profile_pic_url VARCHAR(500),             -- URL for the profile picture
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Profile creation time
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, -- Profile last update time
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE -- Cascade deletes
 );
 
-INSERT INTO trades (instrument_id, date_time, buy_sell, quantity, price, commissions, pnl) VALUES
-(1, '2024-11-01 06:33:00', 'buy', 1, 595.00, 1.5, null),
-(1, '2024-11-01 06:44:00', 'sell', 1, 600.00, 1.5, 2.0),
-(2, '2024-11-22 07:55:00', 'buy', 1, 490.00, 1.00, null),
-(2, '2024-11-22 07:59:00', 'sell', 1, 500.00, 1.00, 8.0);
-(5, '2024-11-23 10:00:00', 'buy', 100, 160.00, 100.00, null),
-(5, '2024-11-24 10:03:00', 'sell', 100, 150.00, 100.00, -1200);
+-- Create the table for roles (e.g., admin, user)
+CREATE TABLE roles (
+    id INT AUTO_INCREMENT PRIMARY KEY,        -- Unique ID for each role
+    role_name VARCHAR(50) NOT NULL UNIQUE,    -- Role name (must be unique)
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Role creation time
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP -- Role last update time
+);
+
+-- Create the table for mapping users to roles (many-to-many relationship)
+CREATE TABLE user_roles (
+    id INT AUTO_INCREMENT PRIMARY KEY,        -- Unique ID for each record
+    user_id INT NOT NULL,                     -- Foreign key to the users table
+    role_id INT NOT NULL,                     -- Foreign key to the roles table
+    assigned_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Role assignment time
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE, -- Cascade deletes
+    FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE -- Cascade deletes
+);
+
+-- Insert sample roles
+INSERT INTO roles (role_name) VALUES ('admin'), ('user'), ('moderator');
+
+-- Insert a sample user and assign them a role
+-- Replace 'hashed_password_here' with an actual hashed password
+INSERT INTO users (username, password_hash) VALUES ('sampleUser', 'hashed_password_here');
+INSERT INTO user_profiles (user_id, first_name, last_name, email) VALUES (1, 'Sample', 'User', 'sampleuser@example.com');
+INSERT INTO user_roles (user_id, role_id) VALUES (1, 1); -- Assign admin role to sampleUser

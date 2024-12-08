@@ -1,0 +1,56 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  
+  <!-- Project metadata -->
+  <groupId>20124fallFP</groupId> <!-- Your project group identifier -->
+  <artifactId>20124fallFP</artifactId> <!-- Your project artifact identifier -->
+  <version>0.0.1-SNAPSHOT</version> <!-- Version of your project -->
+  <packaging>war</packaging> <!-- Specifies the packaging type as a WAR file -->
+
+  <!-- Build configuration -->
+  <build>
+    <plugins>
+      <!-- Maven WAR Plugin: Used for packaging the project into a WAR file -->
+      <plugin>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>3.2.3</version>
+      </plugin>
+
+      <!-- Maven Compiler Plugin: Specifies the Java version for compilation -->
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.13.0</version>
+        <configuration>
+          <release>21</release> <!-- Specifies the Java version to use (e.g., Java 21) -->
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <!-- Dependencies required for the project -->
+  <dependencies>
+    <!-- Gson Library: For working with JSON data -->
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>2.10.1</version>
+    </dependency>
+
+    <!-- MySQL Connector: For connecting to a MySQL database -->
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>8.0.33</version>
+    </dependency>
+
+    <!-- Servlet API: To develop servlets for the backend -->
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>4.0.1</version>
+      <scope>provided</scope> <!-- Provided scope since it's available in the servlet container -->
+    </dependency>
+  </dependencies>
+</project>

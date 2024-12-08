@@ -51,7 +51,7 @@
      ```
      http://localhost:8080/20124fallFP
      ```
-   - *Optional*: You can also try right-clicking the `.war` file in Eclipse IDE and selecting **Run on Server** (results may vary).
+   - *Optional*: You can also try right-clicking the `.war` file in Eclipse IDE and selecting **Run on Tomcat** (never tried).
 
 ---
 ## Setup-MySQL

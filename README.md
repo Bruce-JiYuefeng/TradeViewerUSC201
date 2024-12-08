@@ -15,7 +15,7 @@
 1. **Clean the `backend` folder**:
    - Delete all files in the `backend` folder except `README.md`.
 2. **Import the project**:
-   - Place the provided zip file into the `./backend/` directory and extract it.
+   - import zip file into the `./backend/` directory through eclipse.
 3. **Resolve `pom.xml` errors**:
    - If there are errors in the `pom.xml` file, go to:
      - `Preferences` → `Maven`
@@ -31,17 +31,17 @@
 
 ### 3. Deploy the Backend Code
 1. **Frontend Integration**:
-   - After building the React frontend project, copy the generated static files (`build/` folder contents) into:
+   - After building the React frontend project in frontend folder, copy the generated static files (`build/` folder contents) into:
      ```
      src/main/webapp/static/
      ```
-   - Alternatively, send the files via Discord for inclusion.
+   - Alternatively, send the **STATIC** files via Discord.
 2. **Build the backend project**:
    - Run the following command in the backend project directory:
      ```bash
      mvn clean package
      ```
-   - This will generate a `.war` file in the `target/` folder.
+   - This should generate a `.war` file in the `target/` folder.
 3. **Deploy the `.war` file**:
    - Copy the `.war` file to:
      ```

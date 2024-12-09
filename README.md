@@ -25,6 +25,11 @@
    - For backup purposes, these files are also available in:
      ```
      backend/20124fallFP/src/main/webapp/WEB-INF/lib
+4. **Note on Tomcat**:
+   - Require Tomcat 10.1
+   - Dependencies json files `gson` and `sql connector` need to be copied and pasted to your tomcat place:
+     ```
+     path to tomcat/tomcat/lib
      ```
 
 ---

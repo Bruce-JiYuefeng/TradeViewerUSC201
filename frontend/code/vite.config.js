@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:8083/20124fallFP', // Backend base URL
+        target: 'http://localhost:8083/20124fallFP', // Backend base URL, change 8083 to whatever port number of your tomcat server
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''), // Strip '/api' prefix
       },

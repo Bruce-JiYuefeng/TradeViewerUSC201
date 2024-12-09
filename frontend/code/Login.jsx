@@ -41,6 +41,8 @@ const LoginPage = () => {
       setError("");
 
       // Call backend login API
+      //THIS IS THE PART YOU LINK TO THE BACKEND CLASS!
+      //API is like src
       const response = await fetch("/api/login", {
         method: "POST",
         headers: {

@@ -1,7 +1,7 @@
 package dao;
 
 import config.DatabaseConfig;
-import model.UserDetails;
+//import model.UserDetails;
 import java.sql.*;
 
 /**
@@ -16,20 +16,26 @@ public class UserDao {
      * @return The password if the username exists, otherwise null.
      * @throws ClassNotFoundException 
      */
-    public String getPasswordByUsername(String username) throws ClassNotFoundException {
-        String query = "SELECT password FROM users WHERE username = ?";
-        try (Connection conn = DatabaseConfig.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setString(1, username);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                return rs.getString("password");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+	public String getPasswordByUsername(String username) {
+	    System.out.println("Connecting to the database for username: " + username); // Debug message
+	    String query = "SELECT password FROM users WHERE name = ?";
+	    try (Connection conn = DatabaseConfig.getConnection();
+	         PreparedStatement stmt = conn.prepareStatement(query)) {
+	        stmt.setString(1, username); // Bind the username parameter
+	        ResultSet rs = stmt.executeQuery();
+	        if (rs.next()) {
+	            String password = rs.getString("password");
+	            System.out.println("Query successful! Password: " + password); // Debug message
+	            return password;
+	        } else {
+	            System.out.println("No user found with username: " + username); // Debug message
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return null;
+	}
+
 
     /**
      * Checks if a username already exists in the database.
@@ -80,24 +86,24 @@ public class UserDao {
      * @return The user details if the username exists, otherwise null.
      * @throws ClassNotFoundException 
      */
-    public UserDetails getUserByUsername(String username) throws ClassNotFoundException {
-        String query = "SELECT * FROM users WHERE name = ?";
-        
-        try (Connection conn = DatabaseConfig.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setString(1, username);
-            ResultSet rs = stmt.executeQuery();
-            
-            if (rs.next()) {
-                return new UserDetails(
-                    rs.getLong("user_id"),
-                    rs.getString("name"),
-                    rs.getString("password")
-                );
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+//    public UserDetails getUserByUsername(String username) throws ClassNotFoundException {
+//        String query = "SELECT * FROM users WHERE name = ?";
+//        
+//        try (Connection conn = DatabaseConfig.getConnection();
+//             PreparedStatement stmt = conn.prepareStatement(query)) {
+//            stmt.setString(1, username);
+//            ResultSet rs = stmt.executeQuery();
+//            
+//            if (rs.next()) {
+//                return new UserDetails(
+//                    rs.getLong("user_id"),
+//                    rs.getString("name"),
+//                    rs.getString("password")
+//                );
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
 }

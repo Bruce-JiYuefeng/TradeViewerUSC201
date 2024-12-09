@@ -69,15 +69,27 @@ function Dashboard() {
   };
 
   return (
-    <Container maxWidth="lg">
-      <Box sx={{ my: 4 }}>
-        <FileUpload />
-        <TradeStats />
-        <TradesTable trades={trades} onDeleteTrade={handleDeleteTrade}/>
-        <TradingCharts trades={trades} />
+    <>
+      <Box sx={{ position: 'absolute', top: 20, left: 20 }}>
+        <Button
+          component={Link}
+          to="/"
+          variant="contained"
+        >
+          Home
+        </Button>
       </Box>
-    </Container>
+      <Container maxWidth="lg">
+        <Box sx={{ my: 4 }}>
+          <FileUpload />
+          <TradeStats />
+          <TradesTable trades={trades} onDeleteTrade={handleDeleteTrade}/>
+          <TradingCharts trades={trades} />
+        </Box>
+      </Container>
+    </>
   );
+
 }
 
 function App() {

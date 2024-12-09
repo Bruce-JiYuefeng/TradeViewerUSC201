@@ -17,7 +17,6 @@ import {
 import { Paper, Typography, Grid, Box } from "@mui/material";
 
 const TradingCharts = ({ trades }) => {
-  // Calculate cumulative P/L data for line chart
   const cumulativePL =
     trades?.reduce((acc, trade, index) => {
       const profit = acc[index - 1]?.cumulative || 0;
@@ -30,7 +29,6 @@ const TradingCharts = ({ trades }) => {
       ];
     }, []) || [];
 
-  // Calculate win/loss ratio data for pie chart
   const winLossData = trades?.reduce(
     (acc, trade) => {
       return {
@@ -41,7 +39,6 @@ const TradingCharts = ({ trades }) => {
     { wins: 0, losses: 0 }
   ) || { wins: 0, losses: 0 };
 
-  // Calculate profit by symbol for bar chart
   const profitBySymbol = trades?.reduce((acc, trade) => {
     acc[trade.symbol] = (acc[trade.symbol] || 0) + trade.profitLoss;
     return acc;

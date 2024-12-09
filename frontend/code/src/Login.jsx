@@ -8,8 +8,10 @@ import {
   Box,
   Typography,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -23,14 +25,12 @@ const LoginPage = () => {
       ...prev,
       [name]: value,
     }));
-    // clear the error when user starts typing
     if (error) setError("");
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // validation of fields
     if (!formData.username || !formData.password) {
       setError("Please fill in all fields");
       return;
@@ -40,32 +40,9 @@ const LoginPage = () => {
       setLoading(true);
       setError("");
 
-      // example of api call we will make
-      const response = await fetch("/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      navigate("/dashboard");
 
-      if (!response.ok) {
-        throw new Error("Login failed");
-      }
-
-      const data = await response.json();
-
-      // Handle successful login
-      // store token in local storage
-      if (data.token) {
-        localStorage.setItem("token", data.token);
-      }
-
-      // update context state
-      // setAuth({ user: data.user, token: data.token });
-
-      // redirect to the dashboard (not built out yet)
-      // window.location.href = '/dashboard';
+      // Your existing API call logic...
     } catch (err) {
       setError(err.message || "Invalid username or password");
     } finally {
@@ -80,15 +57,25 @@ const LoginPage = () => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        bgcolor: "grey.900",
+        bgcolor: "#f5f5f5", // Light gray background
       }}
     >
-      <Card sx={{ width: 320, bgcolor: "grey.800" }}>
+      <Card
+        sx={{
+          width: 320,
+          boxShadow: 3,
+          borderRadius: 2,
+        }}
+      >
         <CardContent sx={{ pt: 3 }}>
           <Typography
             variant="h5"
             component="h1"
-            sx={{ mb: 3, color: "white" }}
+            sx={{
+              mb: 3,
+              color: "primary.main",
+              fontWeight: 500,
+            }}
           >
             Login
           </Typography>
@@ -107,7 +94,14 @@ const LoginPage = () => {
               value={formData.username}
               onChange={handleChange}
               disabled={loading}
-              sx={{ mb: 2 }}
+              sx={{
+                mb: 2,
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    borderColor: "rgba(0, 0, 0, 0.23)",
+                  },
+                },
+              }}
               variant="outlined"
             />
 
@@ -119,7 +113,14 @@ const LoginPage = () => {
               value={formData.password}
               onChange={handleChange}
               disabled={loading}
-              sx={{ mb: 3 }}
+              sx={{
+                mb: 3,
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    borderColor: "rgba(0, 0, 0, 0.23)",
+                  },
+                },
+              }}
               variant="outlined"
             />
 
@@ -129,6 +130,11 @@ const LoginPage = () => {
               variant="contained"
               color="primary"
               disabled={loading}
+              sx={{
+                py: 1.5,
+                textTransform: "none",
+                fontSize: "1rem",
+              }}
             >
               {loading ? "Logging in..." : "Login"}
             </Button>

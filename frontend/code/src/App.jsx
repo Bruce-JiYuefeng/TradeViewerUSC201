@@ -5,6 +5,7 @@ import TradeStats from "./components/TradeStats";
 import TradesTable from "./components/TradesTable";
 import TradingCharts from "./components/TradingCharts";
 import LoginPage from "./Login";
+import HomePage from "./HomePage";
 import "./App.css";
 
 function Dashboard() {
@@ -64,13 +65,6 @@ function Dashboard() {
   return (
     <Container maxWidth="lg">
       <Box sx={{ my: 4 }}>
-        <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 2 }}>
-          <Link to="/login" style={{ textDecoration: "none" }}>
-            <Button variant="contained" color="primary">
-              Login
-            </Button>
-          </Link>
-        </Box>
         <FileUpload />
         <TradeStats />
         <TradesTable trades={sampleTrades} />
@@ -85,8 +79,9 @@ function App() {
     <>
       <CssBaseline />
       <Routes>
-        <Route path="/" element={<Dashboard />} />
+        <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </>
   );

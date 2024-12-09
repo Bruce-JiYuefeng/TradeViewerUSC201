@@ -1,24 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const FileUpload = () => {
   const [selectedFile, setSelectedFile] = useState(null);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const validateCSV = (file) => {
     // check if user inputted csv file
-    if (!file.name.endsWith('.csv')) {
-      throw new Error('Please upload a CSV file');
+    if (!file.name.endsWith(".csv")) {
+      throw new Error("Please upload a CSV file");
     }
 
     // file size
     if (file.size > 5 * 1024 * 1024) {
-      throw new Error('File size should be less than 5MB');
+      throw new Error("File size should be less than 5MB");
     }
 
     return true;
@@ -26,8 +26,8 @@ const FileUpload = () => {
 
   const handleFileSelect = (e) => {
     const file = e.target.files[0];
-    setError('');
-    
+    setError("");
+
     if (!file) return;
 
     try {
@@ -36,34 +36,34 @@ const FileUpload = () => {
     } catch (err) {
       setError(err.message);
       setSelectedFile(null);
-      e.target.value = ''; // reset the input of file
+      e.target.value = ""; // reset the input of file
     }
   };
 
   const handleUpload = async (e) => {
     e.preventDefault();
-    
+
     if (!selectedFile) {
-      setError('Please select a file');
+      setError("Please select a file");
       return;
     }
 
     try {
       setLoading(true);
-      setError('');
+      setError("");
 
       // Create FormData for file upload
       const formData = new FormData();
-      formData.append('file', selectedFile);
+      formData.append("file", selectedFile);
 
       // Example API call - replace with your actual endpoint
-      const response = await fetch('/api/upload-csv', {
-        method: 'POST',
-        body: formData
+      const response = await fetch("/api/upload-csv", {
+        method: "POST",
+        body: formData,
       });
 
       if (!response.ok) {
-        throw new Error('Failed to upload file');
+        throw new Error("Failed to upload file");
       }
 
       const data = await response.json();
@@ -71,11 +71,10 @@ const FileUpload = () => {
       // If validation on server side passes
       if (data.isValid) {
         // Navigate to next page
-        navigate('/next-page');
+        navigate("/next-page");
       } else {
-        throw new Error(data.error || 'Invalid CSV format');
+        throw new Error(data.error || "Invalid CSV format");
       }
-
     } catch (err) {
       setError(err.message);
       setSelectedFile(null);
@@ -88,14 +87,16 @@ const FileUpload = () => {
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <Card className="w-96">
         <CardContent className="pt-6">
-          <h1 className="text-2xl font-bold mb-6 text-center">Upload Your CSV File</h1>
-          
+          <h1 className="text-2xl font-bold mb-6 text-center">
+            Upload Your CSV File
+          </h1>
+
           {error && (
             <Alert variant="destructive" className="mb-4">
               <AlertDescription>{error}</AlertDescription>
             </Alert>
           )}
-          
+
           <form onSubmit={handleUpload} className="space-y-6">
             <div className="space-y-4">
               <label className="block text-gray-700">Choose CSV File:</label>
@@ -117,7 +118,7 @@ const FileUpload = () => {
                     Choose File
                   </Button>
                 </div>
-                
+
                 {selectedFile && (
                   <p className="text-sm text-blue-600">
                     Selected file: {selectedFile.name}
@@ -126,12 +127,12 @@ const FileUpload = () => {
               </div>
             </div>
 
-            <Button 
+            <Button
               type="submit"
               className="w-full bg-blue-600 hover:bg-blue-700 text-white"
               disabled={!selectedFile || loading}
             >
-              {loading ? 'Uploading...' : 'Upload File'}
+              {loading ? "Uploading..." : "Upload File"}
             </Button>
           </form>
         </CardContent>

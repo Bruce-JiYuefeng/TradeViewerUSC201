@@ -1,7 +1,7 @@
 package dao;
 
 import config.DatabaseConfig;
-
+import model.UserDetails;
 import java.sql.*;
 
 /**
@@ -71,5 +71,33 @@ public class UserDao {
             e.printStackTrace();
         }
         return false;
+    }
+
+    /**
+     * Retrieves user details by username.
+     *
+     * @param username The username to query.
+     * @return The user details if the username exists, otherwise null.
+     * @throws ClassNotFoundException 
+     */
+    public UserDetails getUserByUsername(String username) throws ClassNotFoundException {
+        String query = "SELECT * FROM users WHERE name = ?";
+        
+        try (Connection conn = DatabaseConfig.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
+            
+            if (rs.next()) {
+                return new UserDetails(
+                    rs.getLong("user_id"),
+                    rs.getString("name"),
+                    rs.getString("password")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

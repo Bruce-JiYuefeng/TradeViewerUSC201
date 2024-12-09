@@ -1,3 +1,4 @@
+import { useState } from "react"; // Add this import
 import { Routes, Route, Link } from "react-router-dom";
 import { Box, Container, CssBaseline, Button } from "@mui/material";
 import FileUpload from "./components/FileUpload";
@@ -9,7 +10,8 @@ import HomePage from "./HomePage";
 import "./App.css";
 
 function Dashboard() {
-  const sampleTrades = [
+  // Initialize trades state with the sample data
+  const [trades, setTrades] = useState([
     {
       id: 1,
       date: "2024-01-01",
@@ -60,15 +62,19 @@ function Dashboard() {
       exitPrice: 310.0,
       profitLoss: 800,
     },
-  ];
+  ]);
+
+  const handleDeleteTrade = (tradeId) => {
+    setTrades(trades.filter(trade => trade.id !== tradeId));
+  };
 
   return (
     <Container maxWidth="lg">
       <Box sx={{ my: 4 }}>
         <FileUpload />
         <TradeStats />
-        <TradesTable trades={sampleTrades} />
-        <TradingCharts trades={sampleTrades} />
+        <TradesTable trades={trades} onDeleteTrade={handleDeleteTrade}/>
+        <TradingCharts trades={trades} />
       </Box>
     </Container>
   );

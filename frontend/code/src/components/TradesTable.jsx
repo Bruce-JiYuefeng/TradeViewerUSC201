@@ -1,56 +1,68 @@
-import { DataGrid } from '@mui/x-data-grid';
-import { Box, Typography } from '@mui/material';
+import { 
+  Table, 
+  TableBody, 
+  TableCell, 
+  TableContainer, 
+  TableHead, 
+  TableRow, 
+  Paper,
+  IconButton,
+  Typography
+} from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 
-function TradesTable({ trades }) {
-  const columns = [
-    { field: 'date', headerName: 'Date', width: 130 },
-    { field: 'symbol', headerName: 'Symbol', width: 130 },
-    { field: 'type', headerName: 'Type', width: 90 },
-    { field: 'quantity', headerName: 'Quantity', width: 100, type: 'number' },
-    { field: 'entryPrice', headerName: 'Entry Price', width: 130, type: 'number' },
-    { field: 'exitPrice', headerName: 'Exit Price', width: 130, type: 'number' },
-    {
-      field: 'profitLoss',
-      headerName: 'Profit/Loss',
-      width: 130,
-      type: 'number',
-      valueFormatter: (params) => {
-        if (params.value == null) return '';
-        return `$${params.value.toLocaleString()}`;
-      },
-    },
-  ];
-
-  // Demo data
-  const rows = [
-    { 
-      id: 1, 
-      date: '2023-01-01', 
-      symbol: 'AAPL', 
-      type: 'Buy', 
-      quantity: 100,
-      entryPrice: 150.00,
-      exitPrice: 155.00,
-      profitLoss: 500
-    },
-    // Add more demo rows as needed
-  ];
-
+const TradesTable = ({ trades, onDeleteTrade }) => {
   return (
-    <Box sx={{ height: 400, width: '100%', mt: 4 }}>
-      <Typography variant="h4" gutterBottom>
-        Trade History
+    <div>
+      <Typography variant="h6" gutterBottom>
+        Trades History
       </Typography>
-      <DataGrid
-        rows={trades || rows}
-        columns={columns}
-        pageSize={5}
-        rowsPerPageOptions={[5]}
-        checkboxSelection
-        disableSelectionOnClick
-      />
-    </Box>
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Date</TableCell>
+              <TableCell>Symbol</TableCell>
+              <TableCell>Type</TableCell>
+              <TableCell>Quantity</TableCell>
+              <TableCell>Entry Price</TableCell>
+              <TableCell>Exit Price</TableCell>
+              <TableCell>Profit/Loss</TableCell>
+              <TableCell>Actions</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {trades.map((trade) => (
+              <TableRow key={trade.id}>
+                <TableCell>{trade.date}</TableCell>
+                <TableCell>{trade.symbol}</TableCell>
+                <TableCell>{trade.type}</TableCell>
+                <TableCell>{trade.quantity}</TableCell>
+                <TableCell>${trade.entryPrice.toFixed(2)}</TableCell>
+                <TableCell>${trade.exitPrice.toFixed(2)}</TableCell>
+                <TableCell 
+                  sx={{ 
+                    color: trade.profitLoss >= 0 ? 'success.main' : 'error.main' 
+                  }}
+                >
+                  ${trade.profitLoss.toFixed(2)}
+                </TableCell>
+                <TableCell>
+                  <IconButton 
+                    aria-label="delete" 
+                    onClick={() => onDeleteTrade(trade.id)}
+                    color="error"
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </div>
   );
-}
+};
 
 export default TradesTable;

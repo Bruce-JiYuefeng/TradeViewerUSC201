@@ -29,12 +29,18 @@ public class FileUploadServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         try {
+            // Get user_id from session
+            Long userId = (Long) request.getSession().getAttribute("userId");
+            if (userId == null) {
+                throw new IllegalStateException("User not logged in");
+            }
+
             Part filePart = request.getPart("file");
             if (!filePart.getSubmittedFileName().toLowerCase().endsWith(".csv")) {
                 throw new IllegalArgumentException("Only CSV files are allowed");
             }
 
-            List<Trade> trades = parseCSV(filePart);
+            List<Trade> trades = parseCSV(filePart, userId);
             boolean success = tradeService.saveTrades(trades);
 
             if (success) {
@@ -49,7 +55,7 @@ public class FileUploadServlet extends HttpServlet {
         }
     }
 
-    private List<Trade> parseCSV(Part filePart) throws IOException {
+    private List<Trade> parseCSV(Part filePart, Long userId) throws IOException {
         List<Trade> trades = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new InputStreamReader(filePart.getInputStream()))) {
             String headerLine = br.readLine(); // Skip header
@@ -57,8 +63,13 @@ public class FileUploadServlet extends HttpServlet {
             
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
+                if (values.length < 7) {
+                    continue; // Skip invalid lines
+                }
+                
                 trades.add(new Trade(
-                    Integer.parseInt(values[0].trim()),      // instrument_id
+                    Integer.parseInt(values[0].trim()),      // instrument_ids
+                    userId,                                  // user_id
                     LocalDateTime.parse(values[1].trim(), DATE_FORMATTER), // date_time
                     values[2].trim(),                        // buy_sell
                     new BigDecimal(values[3].trim()),        // quantity

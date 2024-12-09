@@ -1,3 +1,4 @@
+import { useState } from "react"; // Add this import
 import { Routes, Route, Link } from "react-router-dom";
 import { Box, Container, CssBaseline, Button } from "@mui/material";
 import FileUpload from "./components/FileUpload";
@@ -8,7 +9,8 @@ import LoginPage from "./Login";
 import "./App.css";
 
 function Dashboard() {
-  const sampleTrades = [
+  // Initialize trades state with the sample data
+  const [trades, setTrades] = useState([
     {
       id: 1,
       date: "2024-01-01",
@@ -59,7 +61,11 @@ function Dashboard() {
       exitPrice: 310.0,
       profitLoss: 800,
     },
-  ];
+  ]);
+
+  const handleDeleteTrade = (tradeId) => {
+    setTrades(trades.filter(trade => trade.id !== tradeId));
+  };
 
   return (
     <Container maxWidth="lg">
@@ -73,44 +79,14 @@ function Dashboard() {
         </Box>
         <FileUpload />
         <TradeStats />
-        <TradesTable trades={sampleTrades} />
-        <TradingCharts trades={sampleTrades} />
+        <TradesTable trades={trades} onDeleteTrade={handleDeleteTrade}/>
+        <TradingCharts trades={trades} />
       </Box>
     </Container>
   );
 }
 
 function App() {
-  //const [trades, setTrades] = useState([]); // to do: add this state
-  
-  //temporary testing state/fake data: 
-  const [trades, setTrades] = useState([
-    {
-      id: 1,
-      // add other relevant trade properties based on your data structure
-      symbol: 'AAPL',
-      quantity: 100,
-      price: 150.50,
-      date: '2023-01-01'
-    }
-  ]); 
-  
-
-  const handleDeleteTrade = (tradeId) => {
-    // Filter out the deleted trade
-    setTrades(trades.filter(trade => trade.id !== tradeId));
-    
-    // If you have a backend API, you would also want to make the delete request here
-    // Example:
-    // fetch(`/api/trades/${tradeId}`, {
-    //   method: 'DELETE'
-    // }).then(() => {
-    //   setTrades(trades.filter(trade => trade.id !== tradeId));
-    // }).catch(error => {
-    //   console.error('Error deleting trade:', error);
-    // });
-  };
-
   return (
     <>
       <CssBaseline />

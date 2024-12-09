@@ -6,62 +6,63 @@ import {
   TableHead, 
   TableRow, 
   Paper,
-  IconButton 
+  IconButton,
+  Typography
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-function TradesTable({ trades = [
-  // Sample trade for testing
-  {
-    id: 1,
-    date: '2023-12-01',
-    symbol: 'AAPL',
-    quantity: 100,
-    price: 189.95,
-    type: 'BUY'
-  }
-], onDeleteTrade }) {
-  const handleDelete = (tradeId) => {
-    // Call the parent component's delete handler
-    onDeleteTrade(tradeId);
-  };
-
+const TradesTable = ({ trades, onDeleteTrade }) => {
   return (
-    <TableContainer component={Paper}>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>Date</TableCell>
-            <TableCell>Symbol</TableCell>
-            <TableCell>Quantity</TableCell>
-            <TableCell>Price</TableCell>
-            <TableCell>Type</TableCell>
-            <TableCell>Actions</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {trades.map((trade) => (
-            <TableRow key={trade.id}>
-              <TableCell>{trade.date}</TableCell>
-              <TableCell>{trade.symbol}</TableCell>
-              <TableCell>{trade.quantity}</TableCell>
-              <TableCell>{trade.price}</TableCell>
-              <TableCell>{trade.type}</TableCell>
-              <TableCell>
-                <IconButton 
-                  aria-label="delete" 
-                  onClick={() => handleDelete(trade.id)}
-                  color="error"
-                >
-                  <DeleteIcon />
-                </IconButton>
-              </TableCell>
+    <div>
+      <Typography variant="h6" gutterBottom>
+        Trades History
+      </Typography>
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Date</TableCell>
+              <TableCell>Symbol</TableCell>
+              <TableCell>Type</TableCell>
+              <TableCell>Quantity</TableCell>
+              <TableCell>Entry Price</TableCell>
+              <TableCell>Exit Price</TableCell>
+              <TableCell>Profit/Loss</TableCell>
+              <TableCell>Actions</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {trades.map((trade) => (
+              <TableRow key={trade.id}>
+                <TableCell>{trade.date}</TableCell>
+                <TableCell>{trade.symbol}</TableCell>
+                <TableCell>{trade.type}</TableCell>
+                <TableCell>{trade.quantity}</TableCell>
+                <TableCell>${trade.entryPrice.toFixed(2)}</TableCell>
+                <TableCell>${trade.exitPrice.toFixed(2)}</TableCell>
+                <TableCell 
+                  sx={{ 
+                    color: trade.profitLoss >= 0 ? 'success.main' : 'error.main' 
+                  }}
+                >
+                  ${trade.profitLoss.toFixed(2)}
+                </TableCell>
+                <TableCell>
+                  <IconButton 
+                    aria-label="delete" 
+                    onClick={() => onDeleteTrade(trade.id)}
+                    color="error"
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </div>
   );
-}
+};
 
 export default TradesTable;

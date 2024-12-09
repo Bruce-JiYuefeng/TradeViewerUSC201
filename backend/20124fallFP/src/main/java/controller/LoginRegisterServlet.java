@@ -45,7 +45,7 @@ public class LoginRegisterServlet extends HttpServlet {
         String responseMessage = null;
         if ("/login".equals(path)) {
             try {
-				responseMessage = handleLogin(userRequest);
+				responseMessage = handleLogin(userRequest, req);
 			} catch (ClassNotFoundException e) {
 				
 				e.printStackTrace();
@@ -67,11 +67,15 @@ public class LoginRegisterServlet extends HttpServlet {
         resp.getWriter().write(responseMessage);
     }
 
-    private String handleLogin(UserRequest userRequest) throws ClassNotFoundException {
-        if (userService.validateUser(userRequest.getUsername(), userRequest.getPassword())) {
-            return createResponse("success", "Login successful");
+    private String handleLogin(UserRequest userRequest, HttpServletRequest req) throws ClassNotFoundException {
+        LoginResponse loginResponse = userService.validateUser(userRequest.getUsername(), userRequest.getPassword());
+        if (loginResponse.isSuccess()) {
+            HttpSession session = req.getSession();
+            session.setAttribute("userId", loginResponse.getUserId());
+            session.setAttribute("role", loginResponse.getRole());
+            return createResponse("success", "Login successful", loginResponse.getRole());
         }
-        return createResponse("error", "Invalid username or password");
+        return createResponse("error", "Invalid username or password", "guest");
     }
 
     private String handleRegister(UserRequest userRequest) throws ClassNotFoundException {
@@ -82,7 +86,8 @@ public class LoginRegisterServlet extends HttpServlet {
     }
 
 
-    private String createResponse(String status, String message) {
-        return String.format("{\"status\": \"%s\", \"message\": \"%s\"}", status, message);
+    private String createResponse(String status, String message, String role) {
+        return String.format("{\"status\": \"%s\", \"message\": \"%s\", \"role\": \"%s\"}", 
+                            status, message, role);
     }
 }

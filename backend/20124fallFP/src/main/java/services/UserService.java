@@ -15,9 +15,13 @@ Validates a user's credentials by comparing input with database records.*
 @param password The password provided by the user.
 @return True if the credentials are valid, otherwise false.
 @throws ClassNotFoundException */
-public boolean validateUser(String username, String password) throws ClassNotFoundException {
-    String storedPassword = userDao.getPasswordByUsername(username);
-    return storedPassword != null && storedPassword.equals(password);}
+public LoginResponse validateUser(String username, String password) throws ClassNotFoundException {
+    UserDetails user = userDao.getUserByUsername(username);
+    if (user != null && user.getPassword().equals(password)) {
+        return new LoginResponse(true, user.getRole(), user.getUserId());
+    }
+    return new LoginResponse(false, "guest", null);
+}
 
     /**
      

@@ -6,6 +6,7 @@ import TradeStats from "./components/TradeStats";
 import TradesTable from "./components/TradesTable";
 import TradingCharts from "./components/TradingCharts";
 import LoginPage from "./Login";
+import Registration from "./register";
 import HomePage from "./HomePage";
 import "./App.css";
 
@@ -99,6 +100,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/Register" element={<Registration />} /> 
         <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </>

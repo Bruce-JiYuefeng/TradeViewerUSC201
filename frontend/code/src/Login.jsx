@@ -40,9 +40,28 @@ const LoginPage = () => {
       setLoading(true);
       setError("");
 
-      navigate("/dashboard");
+      // Call backend login API
+      const response = await fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: formData.username,
+          password: formData.password,
+        }),
+      });
 
-      // Your existing API call logic...
+      const data = await response.json();
+
+      if (data.status === "success") {
+        // Login successful, navigate to dashboard
+        navigate("/dashboard");
+      } else {
+        // Login failed, show error message
+        throw new Error(data.message);
+      }
+
     } catch (err) {
       setError(err.message || "Invalid username or password");
     } finally {

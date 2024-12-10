@@ -55,7 +55,7 @@ function Registration() {
       setLoading(true);
       setServerError('');
 
-      const response = await fetch('/api/register', {
+      const response = await fetch("/api/register", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -73,6 +73,7 @@ function Registration() {
       } else {
         throw new Error(data.message);
       }
+
     } catch (err) {
       setServerError(err.message);
     } finally {

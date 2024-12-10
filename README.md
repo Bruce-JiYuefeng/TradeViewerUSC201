@@ -1,6 +1,6 @@
 # Backend and Frontend Workspaces
 
-**Note:** Frontend and backend projects now have separate workspaces for better organization. Follow the setup instructions below to get started.
+**Note:** Frontend and backend are now completely separate for better organization. Follow the setup instructions below to get started.
 
 ---
 

@@ -4,9 +4,9 @@
   <modelVersion>4.0.0</modelVersion>
   
   <!-- Project metadata -->
-  <groupId>20124fallFP</groupId> <!-- Your project group identifier -->
-  <artifactId>20124fallFP</artifactId> <!-- Your project artifact identifier -->
-  <version>0.0.1-SNAPSHOT</version> <!-- Version of your project -->
+  <groupId>20124fallFP</groupId> <!-- project group identifier -->
+  <artifactId>20124fallFP</artifactId> <!-- project artifact identifier -->
+  <version>0.0.1-SNAPSHOT</version> <!-- Version of project -->
   <packaging>war</packaging> <!-- Specifies the packaging type as a WAR file -->
 
   <!-- Build configuration -->

@@ -9,6 +9,7 @@ import services.UserService;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.annotation.WebServlet;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,7 +20,7 @@ import java.util.logging.Logger;
 /**
  * Register Servlet to handle user registration requests.
  */
-//@WebServlet("/api/register")
+@WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
     
     private static final long serialVersionUID = 1L;
@@ -67,6 +68,7 @@ public class RegisterServlet extends HttpServlet {
             resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             resp.setContentType("application/json");
             resp.getWriter().write("{\"status\": \"error\", \"message\": \"Internal server error\"}");
+            System.out.println("something wrong in RegisterServlet.");
         }
     }
 }

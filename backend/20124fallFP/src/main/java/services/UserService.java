@@ -36,6 +36,7 @@ public class UserService {
 	 */
 	public boolean registerUser(String username, String password)  {
 		if (userDao.isUsernameExists(username)) {
+			System.out.println("UserService.registerUser returned false, username already exist.");
 			return false;
 		} // Username already exists
 		return userDao.saveUser(username, password);

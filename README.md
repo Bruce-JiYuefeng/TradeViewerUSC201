@@ -41,7 +41,7 @@
      mvn clean build
      ```
      in the project folder, you will get a `.war` file in target folder.
-1. **Deploy the `.war` file**:
+2. **Deploy the `.war` file**:
    - Copy the `.war` file to:
      ```
      Tomcat/webapps/
@@ -50,7 +50,7 @@
      ```
      http://localhost:8080/20124fallFP
      ```
-   - *Optional*: You can also try right-clicking the project in Eclipse IDE and selecting **Run on Tomcat** (much faster and easier).
+3. ** *Optional*: You can also try right-clicking the project in Eclipse IDE and selecting **Run on Tomcat** (much faster and easier).**
 
 ---
 ## Setup-MySQL

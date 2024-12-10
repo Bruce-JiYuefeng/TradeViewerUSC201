@@ -70,15 +70,12 @@ function Registration() {
 
       if (data.status === "success") {
         navigate('/login');
-      } else if (data.status === "repeat"){
-        setServerError(data.message);
       } else {
-        setServerError(data.message);
+        throw new Error(data.message);
       }
-      throw new Error(err.message);
 
     } catch (err) {
-      setServerError(err.message);
+      setServerError(data.message);
     } finally {
       setLoading(false);
     }

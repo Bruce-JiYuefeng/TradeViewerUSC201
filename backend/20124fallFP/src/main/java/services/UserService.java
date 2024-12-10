@@ -34,7 +34,7 @@ public class UserService {
 	 * @return True if registration is successful, otherwise false.
 	 * @throws ClassNotFoundException
 	 */
-	public boolean registerUser(String username, String password) throws ClassNotFoundException {
+	public boolean registerUser(String username, String password)  {
 		if (userDao.isUsernameExists(username)) {
 			return false;
 		} // Username already exists

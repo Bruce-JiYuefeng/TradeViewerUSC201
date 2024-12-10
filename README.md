@@ -35,6 +35,12 @@
 ---
 
 ### 3. Deploy the Backend Code
+1. **Generate the '.war' file**:
+   - run the command
+     ```
+     mvn clean build
+     ```
+     in the project folder, you will get a `.war` file in target folder.
 1. **Deploy the `.war` file**:
    - Copy the `.war` file to:
      ```

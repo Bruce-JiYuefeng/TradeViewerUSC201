@@ -51,11 +51,11 @@ function Registration() {
     
     if (!validateForm()) return;
 
-    try {
+    try {//this part
       setLoading(true);
       setServerError('');
 
-      const response = await fetch('/register', {
+      const response = await fetch('/api/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -44,8 +44,9 @@ public class UserDao {
      * @return True if the username exists, otherwise false.
      * @throws ClassNotFoundException 
      */
-    public boolean isUsernameExists(String username) throws ClassNotFoundException {
-        String query = "SELECT 1 FROM users WHERE username = ?";
+    public boolean isUsernameExists(String username){
+    	System.out.println("Connecting to the database for username: " + username);
+        String query = "SELECT 1 FROM users WHERE name = ?";
         try (Connection conn = DatabaseConfig.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, username);
@@ -65,8 +66,8 @@ public class UserDao {
      * @return True if the operation is successful, otherwise false.
      * @throws ClassNotFoundException 
      */
-    public boolean saveUser(String username, String password) throws ClassNotFoundException {
-        String query = "INSERT INTO users (username, password) VALUES (?, ?)";
+    public boolean saveUser(String username, String password) {
+        String query = "INSERT INTO users (name, password) VALUES (?, ?)";
         try (Connection conn = DatabaseConfig.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, username);

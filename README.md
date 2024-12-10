@@ -35,19 +35,7 @@
 ---
 
 ### 3. Deploy the Backend Code
-1. **Frontend Integration**:
-   - After building the React frontend project in frontend folder, copy the generated static files (`build/` folder contents) into:
-     ```
-     src/main/webapp/static/
-     ```
-   - Alternatively, send the **STATIC** files via Discord.
-2. **Build the backend project**:
-   - Run the following command in the backend project directory:
-     ```bash
-     mvn clean package
-     ```
-   - This should generate a `.war` file in the `target/` folder.
-3. **Deploy the `.war` file**:
+1. **Deploy the `.war` file**:
    - Copy the `.war` file to:
      ```
      Tomcat/webapps/

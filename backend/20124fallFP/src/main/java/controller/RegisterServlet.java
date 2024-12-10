@@ -64,12 +64,12 @@ public class RegisterServlet extends HttpServlet {
             LOGGER.log(Level.WARNING, "Caught UsernameAlreadyExistsException", e);
             resp.setStatus(HttpServletResponse.SC_CONFLICT);
             resp.setContentType("application/json");
-            messageOut = ("{\"status\": \"error\", \"message\": \"Username already exists\"}");
+            messageOut = ("{\"status\": \"repeat\", \"message\": \"Username already exists\"}");
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Error processing registration request", e);
             resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             resp.setContentType("application/json");
-            messageOut = ("{\"status\": \"error\", \"message\": \"Internal server error\"}");
+            messageOut = ("{\"status\": \"internal\", \"message\": \"Internal server error\"}");
         } finally {
         	out.print(messageOut);
             out.flush();

@@ -70,6 +70,8 @@ function Registration() {
 
       if (data.status === "success") {
         navigate('/login');
+      } else if (data.status === "repeat"){
+        throw new Error(data.message);
       } else {
         throw new Error(data.message);
       }

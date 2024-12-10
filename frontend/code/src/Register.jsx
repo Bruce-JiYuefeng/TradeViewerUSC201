@@ -1,75 +1,82 @@
-import React, { useState } from "react";
-import {
-  Box,
-  Card,
-  CardContent,
-  TextField,
-  Button,
-  Alert,
-  Typography,
-} from "@mui/material";
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const Registration = () => {
+function Registration() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    username: "",
-    password: "",
-    confirmPassword: "",
+    username: '',
+    password: '',
+    confirmPassword: ''
   });
   const [errors, setErrors] = useState({});
-  const [serverError, setServerError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [serverError, setServerError] = useState('');
 
   const validateForm = () => {
     const newErrors = {};
+
     if (!formData.username.trim()) {
-      newErrors.username = "Username is required";
+      newErrors.username = 'Username is required';
     }
+
     if (formData.password.length < 6) {
-      newErrors.password = "Password must be at least 6 characters";
+      newErrors.password = 'Password must be at least 6 characters';
     }
+
     if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = "Passwords do not match";
+      newErrors.confirmPassword = 'Passwords do not match';
     }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
+    setFormData(prev => ({
       ...prev,
-      [name]: value,
+      [name]: value
     }));
+    
     if (errors[name]) {
-      setErrors((prev) => ({
+      setErrors(prev => ({
         ...prev,
-        [name]: "",
+        [name]: ''
       }));
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
     if (!validateForm()) return;
 
-    try {
+    try {//this part
       setLoading(true);
+      setServerError('');
+
       const response = await fetch("/api/register", {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          username: formData.username,
+          password: formData.password,
+        }),
       });
-      if (!response.ok) {
-        throw new Error("Registration failed");
-      }
+
       const data = await response.json();
+
       if (data.status === "success") {
-        window.location.href = "/login";
+        navigate('/login');
+      } else if (data.status === "repeat"){
+        setServerError(data.message);
       } else {
-        throw new Error(data.message);
+        setServerError(data.message);
       }
+      throw new Error(err.message);
+
     } catch (err) {
       setServerError(err.message);
     } finally {
@@ -78,123 +85,93 @@ const Registration = () => {
   };
 
   return (
-    <Box
-      sx={{
-        minHeight: "100vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        bgcolor: "#f5f5f5",
-      }}
-    >
-      <Card
-        sx={{
-          width: 400,
-          boxShadow: 3,
-          borderRadius: 2,
-        }}
-      >
-        <CardContent sx={{ pt: 3 }}>
-          <Typography
-            variant="h5"
-            component="h1"
-            sx={{
-              mb: 3,
-              color: "primary.main",
-              fontWeight: 500,
-              textAlign: "center",
-            }}
-          >
-            Create Account
-          </Typography>
+    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="max-w-md w-full p-6 bg-white rounded-lg shadow-lg">
+        <h2 className="text-2xl font-bold text-center text-gray-800 mb-8">Create an Account</h2>
+        
+        {serverError && (
+          <div className="mb-4 p-3 bg-red-100 text-red-700 rounded">
+            {serverError}
+          </div>
+        )}
 
-          {serverError && (
-            <Alert severity="error" sx={{ mb: 2 }}>
-              {serverError}
-            </Alert>
-          )}
-
-          <form onSubmit={handleSubmit}>
-            <TextField
-              fullWidth
-              label="Username"
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium mb-1">Username</label>
+            <input
+              type="text"
               name="username"
               value={formData.username}
               onChange={handleChange}
-              error={!!errors.username}
-              helperText={errors.username}
+              className={`w-full p-2 border rounded focus:outline-none focus:ring-2 ${
+                errors.username ? 'border-red-500' : 'border-gray-300'
+              }`}
               disabled={loading}
-              sx={{ mb: 2 }}
             />
+            {errors.username && (
+              <p className="text-sm text-red-500 mt-1">{errors.username}</p>
+            )}
+          </div>
 
-            <TextField
-              fullWidth
-              label="Password"
+          <div>
+            <label className="block text-sm font-medium mb-1">Password</label>
+            <input
               type="password"
               name="password"
               value={formData.password}
               onChange={handleChange}
-              error={!!errors.password}
-              helperText={errors.password}
+              className={`w-full p-2 border rounded focus:outline-none focus:ring-2 ${
+                errors.password ? 'border-red-500' : 'border-gray-300'
+              }`}
               disabled={loading}
-              sx={{ mb: 2 }}
             />
+            {errors.password && (
+              <p className="text-sm text-red-500 mt-1">{errors.password}</p>
+            )}
+          </div>
 
-            <TextField
-              fullWidth
-              label="Confirm Password"
+          <div>
+            <label className="block text-sm font-medium mb-1">Confirm Password</label>
+            <input
               type="password"
               name="confirmPassword"
               value={formData.confirmPassword}
               onChange={handleChange}
-              error={!!errors.confirmPassword}
-              helperText={errors.confirmPassword}
+              className={`w-full p-2 border rounded focus:outline-none focus:ring-2 ${
+                errors.confirmPassword ? 'border-red-500' : 'border-gray-300'
+              }`}
               disabled={loading}
-              sx={{ mb: 3 }}
             />
+            {errors.confirmPassword && (
+              <p className="text-sm text-red-500 mt-1">{errors.confirmPassword}</p>
+            )}
+          </div>
 
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              disabled={loading}
-              sx={{
-                py: 1.5,
-                textTransform: "none",
-                fontSize: "1rem",
-              }}
-            >
-              {loading ? "Creating Account..." : "Register"}
-            </Button>
+          <button 
+            type="submit"
+            className={`w-full p-2 text-white rounded ${
+              loading 
+                ? 'bg-blue-400 cursor-not-allowed' 
+                : 'bg-blue-600 hover:bg-blue-700'
+            }`}
+            disabled={loading}
+          >
+            {loading ? 'Creating Account...' : 'Register'}
+          </button>
 
-            <Typography
-              variant="body2"
-              sx={{
-                textAlign: "center",
-                mt: 2,
-                color: "text.secondary",
-              }}
+          <p className="text-center text-sm text-gray-600">
+            Already have an account?{' '}
+            <span
+              onClick={() => navigate('/login')}
+              className="text-blue-600 hover:underline cursor-pointer"
             >
-              Already have an account?{" "}
-              <Button
-                component="a"
-                href="/login"
-                size="small"
-                sx={{
-                  textTransform: "none",
-                  color: "primary.main",
-                  p: 0,
-                }}
-              >
-                Login here
-              </Button>
-            </Typography>
-          </form>
-        </CardContent>
-      </Card>
-    </Box>
+              Login here
+            </span>
+          </p>
+        </form>
+      </div>
+    </div>
   );
-};
+}
 
 export default Registration;

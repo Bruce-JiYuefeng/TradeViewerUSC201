@@ -1,5 +1,7 @@
 import { Box, Typography, Button, Container } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import Lottie from "lottie-react";
+import animationData from "./animations/trading-animation.json";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -16,6 +18,14 @@ const HomePage = () => {
       }}
     >
       <Container maxWidth="sm">
+        <Box sx={{ width: "100%", maxWidth: 300, mx: "auto", mb: 4 }}>
+          <Lottie
+            animationData={animationData}
+            loop={true}
+            style={{ width: "100%" }}
+          />
+        </Box>
+
         <Typography
           variant="h2"
           component="h1"

@@ -26,6 +26,8 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try {
+            LOGGER.info("Processing login request"); // Debug message
+
             // Parse JSON request body
             BufferedReader reader = req.getReader();
             StringBuilder json = new StringBuilder();
@@ -48,8 +50,10 @@ public class LoginServlet extends HttpServlet {
             // Send JSON response
             PrintWriter out = resp.getWriter();
             if (isValid) {
+                LOGGER.info("Login successful for user: " + userRequest.getUsername()); // Debug message
                 out.print("{\"status\": \"success\", \"message\": \"Login successful\"}");
             } else {
+                LOGGER.warning("Invalid login attempt for user: " + userRequest.getUsername()); // Debug message
                 out.print("{\"status\": \"error\", \"message\": \"Invalid username or password\"}");
             }
             out.flush();
@@ -58,7 +62,9 @@ public class LoginServlet extends HttpServlet {
             LOGGER.log(Level.SEVERE, "Error processing login request", e);
             resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             resp.setContentType("application/json");
-            resp.getWriter().write("{\"status\": \"error\", \"message\": \"Internal server error\"}");
+            PrintWriter out = resp.getWriter();
+            out.write("{\"status\": \"error\", \"message\": \"Internal server error\"}");
+            out.flush();
         }
     }
 }

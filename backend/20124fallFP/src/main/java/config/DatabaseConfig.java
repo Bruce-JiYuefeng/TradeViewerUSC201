@@ -24,6 +24,11 @@ public class DatabaseConfig {
 	 * @throws ClassNotFoundException
 	 */
 	public static Connection getConnection() throws SQLException {
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver"); // Explicitly load the JDBC driver
+		} catch (ClassNotFoundException e) {
+			throw new SQLException("MySQL JDBC Driver not found", e);
+		}
 		Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
         System.out.println("Database connected successfully!（DatabaseConfig）"); // Debug message
         return conn;

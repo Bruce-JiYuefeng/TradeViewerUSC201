@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 
 import model.UserRequest;
 import services.UserService;
+import exceptions.UsernameAlreadyExistsException;
 
 //import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -29,6 +30,8 @@ public class RegisterServlet extends HttpServlet {
     
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        PrintWriter out = resp.getWriter();
+        String messageOut = "";
         try {
             // Parse JSON request body
             BufferedReader reader = req.getReader();
@@ -42,33 +45,36 @@ public class RegisterServlet extends HttpServlet {
             Gson gson = new Gson();
             UserRequest userRequest = gson.fromJson(json.toString(), UserRequest.class);
 
-            
-            
+            // Register user
             boolean isRegistered = userService.registerUser(userRequest.getUsername(), userRequest.getPassword());
-
-            
 
             // Set response headers
             resp.setContentType("application/json");
             resp.setCharacterEncoding("UTF-8");
 
-            // Send JSON response
-            PrintWriter out = resp.getWriter();
+            // Send success response
             if (isRegistered) {
                 resp.setStatus(HttpServletResponse.SC_CREATED);
-                out.print("{\"status\": \"success\", \"message\": \"Registration successful\"}");
+                messageOut = ("{\"status\": \"success\", \"message\": \"Registration successful\"}");
             } else {
                 resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                out.print("{\"status\": \"error\", \"message\": \"Registration failed\"}");
+                messageOut = ("{\"status\": \"error\", \"message\": \"Registration failed\"}");
             }
-            out.flush();
-
+        } catch (UsernameAlreadyExistsException e) {
+            LOGGER.log(Level.WARNING, "Caught UsernameAlreadyExistsException", e);
+            resp.setStatus(HttpServletResponse.SC_CONFLICT);
+            resp.setContentType("application/json");
+            messageOut = ("{\"status\": \"error\", \"message\": \"Username already exists\"}");
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Error processing registration request", e);
             resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             resp.setContentType("application/json");
-            resp.getWriter().write("{\"status\": \"error\", \"message\": \"Internal server error\"}");
-            System.out.println("something wrong in RegisterServlet.");
+            messageOut = ("{\"status\": \"error\", \"message\": \"Internal server error\"}");
+        } finally {
+        	out.print(messageOut);
+            out.flush();
+            out.close();
         }
     }
+
 }

@@ -1,6 +1,7 @@
 package services;
 
 import dao.UserDao;
+import exceptions.UsernameAlreadyExistsException;
 
 /**
  * 
@@ -34,11 +35,13 @@ public class UserService {
 	 * @return True if registration is successful, otherwise false.
 	 * @throws ClassNotFoundException
 	 */
-	public boolean registerUser(String username, String password)  {
-		if (userDao.isUsernameExists(username)) {
-			System.out.println("UserService.registerUser returned false, username already exist.");
-			return false;
-		} // Username already exists
+	public boolean registerUser(String username, String password) throws UsernameAlreadyExistsException {
+		boolean usernameExists = userDao.isUsernameExists(username);
+		System.out.println("Username exists check for " + username + ": " + usernameExists); // Debug message
+		if (usernameExists) {
+			System.out.println("Username already exists, throwing exception."); // Debug message
+			throw new UsernameAlreadyExistsException("Username already exists.");
+		}
 		return userDao.saveUser(username, password);
 	}
 }

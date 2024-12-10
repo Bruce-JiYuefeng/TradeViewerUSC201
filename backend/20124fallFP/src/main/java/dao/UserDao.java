@@ -46,20 +46,20 @@ public class UserDao {
 	 * @throws ClassNotFoundException
 	 */
 	public boolean isUsernameExists(String username) {
-	    System.out.println("Checking if username exists: " + username); // Debug message
-	    String query = "SELECT 1 FROM users WHERE name = ?";
-	    try (Connection conn = DatabaseConfig.getConnection();
-	         PreparedStatement stmt = conn.prepareStatement(query)) {
-	        stmt.setString(1, username);
-	        ResultSet rs = stmt.executeQuery();
-	        boolean exists = rs.next();
-	        System.out.println("Username " + username + " exists: " + exists); // Debug message
-	        return exists;
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	        System.out.println("SQL error in UserDao.isUsernameExists for username: " + username);
-	    }
-	    return false;
+		System.out.println("Checking if username exists: " + username); // Debug message
+		String query = "SELECT 1 FROM users WHERE name = ?";
+		try (Connection conn = DatabaseConfig.getConnection();
+			 PreparedStatement stmt = conn.prepareStatement(query)) {
+			stmt.setString(1, username);
+			ResultSet rs = stmt.executeQuery();
+			boolean exists = rs.next();
+			System.out.println("Username " + username + " exists: " + exists); // Debug message
+			return exists;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("SQL error in UserDao.isUsernameExists for username: " + username);
+		}
+		return false;
 	}
 
 	/**
@@ -71,19 +71,19 @@ public class UserDao {
 	 * @throws ClassNotFoundException
 	 */
 	public boolean saveUser(String username, String password) {
-	    String query = "INSERT INTO users (name, password) VALUES (?, ?)";
-	    try (Connection conn = DatabaseConfig.getConnection();
-	         PreparedStatement stmt = conn.prepareStatement(query)) {
-	        stmt.setString(1, username);
-	        stmt.setString(2, password);
-	        int rowsInserted = stmt.executeUpdate();
-	        System.out.println("Rows inserted: " + rowsInserted); // Debug message
-	        return rowsInserted > 0;
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	        System.out.println("SQL error in UserDao.saveUser for username: " + username);
-	    }
-	    return false;
+		String query = "INSERT INTO users (name, password) VALUES (?, ?)";
+		try (Connection conn = DatabaseConfig.getConnection();
+			 PreparedStatement stmt = conn.prepareStatement(query)) {
+			stmt.setString(1, username);
+			stmt.setString(2, password);
+			int rowsInserted = stmt.executeUpdate();
+			System.out.println("Rows inserted: " + rowsInserted); // Debug message
+			return rowsInserted > 0;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("SQL error in UserDao.saveUser for username: " + username);
+		}
+		return false;
 	}
 
 	/**

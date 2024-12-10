@@ -1,4 +1,7 @@
-workspace for frontend
+**workspace for frontend**
+
+**make sure you have vite, lottie-react and react installed**
+
 How to see the page:
 1. open terminal
 2. go to frontend folder
@@ -8,6 +11,5 @@ How to see the page:
 6. follow the link to see the page
 7. once the backend is running you may start to use!
 
-make sure you have vite and react installed
 
 

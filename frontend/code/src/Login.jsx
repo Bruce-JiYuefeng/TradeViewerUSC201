@@ -57,14 +57,17 @@ const LoginPage = () => {
       if (data.status === "success") {
         // Login successful, navigate to dashboard
         navigate("/dashboard");
-      } else {
+      } 
+      else {
         // Login failed, show error message
         throw new Error(data.message);
       }
 
-    } catch (err) {
+    } 
+    catch (err) {
       setError(err.message || "Invalid username or password");
-    } finally {
+    } 
+    finally {
       setLoading(false);
     }
   };

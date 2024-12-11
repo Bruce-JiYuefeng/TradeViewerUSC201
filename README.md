@@ -1,6 +1,6 @@
 # Backend and Frontend Workspaces
 
-**Note:** Frontend and backend projects now have separate workspaces for better organization. Follow the setup instructions below to get started.
+**Note:** Frontend and backend are now completely separate for better organization. Follow the setup instructions below to get started.
 
 ---
 
@@ -25,24 +25,23 @@
    - For backup purposes, these files are also available in:
      ```
      backend/20124fallFP/src/main/webapp/WEB-INF/lib
+4. **Note on Tomcat**:
+   - Require Tomcat 10.1
+   - Dependencies json files `gson` and `sql connector` need to be copied and pasted to your tomcat place:
+     ```
+     path to tomcat/tomcat/lib
      ```
 
 ---
 
 ### 3. Deploy the Backend Code
-1. **Frontend Integration**:
-   - After building the React frontend project in frontend folder, copy the generated static files (`build/` folder contents) into:
+1. **Generate the '.war' file**:
+   - run the command
      ```
-     src/main/webapp/static/
+     mvn clean build
      ```
-   - Alternatively, send the **STATIC** files via Discord.
-2. **Build the backend project**:
-   - Run the following command in the backend project directory:
-     ```bash
-     mvn clean package
-     ```
-   - This should generate a `.war` file in the `target/` folder.
-3. **Deploy the `.war` file**:
+     in the project folder, you will get a `.war` file in target folder.
+2. **Deploy the `.war` file**:
    - Copy the `.war` file to:
      ```
      Tomcat/webapps/
@@ -51,7 +50,7 @@
      ```
      http://localhost:8080/20124fallFP
      ```
-   - *Optional*: You can also try right-clicking the `.war` file in Eclipse IDE and selecting **Run on Tomcat** (never tried).
+3. ** *Optional*: You can also try right-clicking the project in Eclipse IDE and selecting **Run on Tomcat** (much faster and easier).**
 
 ---
 ## Setup-MySQL

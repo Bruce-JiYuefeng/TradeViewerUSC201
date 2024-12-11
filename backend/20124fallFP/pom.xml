@@ -4,9 +4,9 @@
   <modelVersion>4.0.0</modelVersion>
   
   <!-- Project metadata -->
-  <groupId>20124fallFP</groupId> <!-- Your project group identifier -->
-  <artifactId>20124fallFP</artifactId> <!-- Your project artifact identifier -->
-  <version>0.0.1-SNAPSHOT</version> <!-- Version of your project -->
+  <groupId>20124fallFP</groupId> <!-- project group identifier -->
+  <artifactId>20124fallFP</artifactId> <!-- project artifact identifier -->
+  <version>0.0.1-SNAPSHOT</version> <!-- Version of project -->
   <packaging>war</packaging> <!-- Specifies the packaging type as a WAR file -->
 
   <!-- Build configuration -->
@@ -51,6 +51,14 @@
       <artifactId>javax.servlet-api</artifactId>
       <version>4.0.1</version>
       <scope>provided</scope> <!-- Provided scope since it's available in the servlet container -->
+    </dependency>
+    
+    <!-- Jakarta Servlet API for Tomcat 10 -->
+    <dependency>
+        <groupId>jakarta.servlet</groupId>
+        <artifactId>jakarta.servlet-api</artifactId>
+        <version>5.0.0</version> <!-- for tomcat 10 -->
+        <scope>provided</scope> <!-- it will be provided by tomcat -->
     </dependency>
   </dependencies>
 </project>

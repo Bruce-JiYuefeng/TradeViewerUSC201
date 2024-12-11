@@ -41,6 +41,8 @@ const LoginPage = () => {
       setError("");
 
       // Call backend login API
+      //THIS IS THE PART YOU LINK TO THE BACKEND CLASS!
+      //API is like src
       const response = await fetch("/api/login", {
         method: "POST",
         headers: {
@@ -57,17 +59,14 @@ const LoginPage = () => {
       if (data.status === "success") {
         // Login successful, navigate to dashboard
         navigate("/dashboard");
-      } 
-      else {
+      } else {
         // Login failed, show error message
         throw new Error(data.message);
       }
 
-    } 
-    catch (err) {
+    } catch (err) {
       setError(err.message || "Invalid username or password");
-    } 
-    finally {
+    } finally {
       setLoading(false);
     }
   };

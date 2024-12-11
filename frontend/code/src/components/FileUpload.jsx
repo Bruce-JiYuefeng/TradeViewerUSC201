@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Box, Typography, Alert } from '@mui/material';
+import { Button, Box, Typography, Alert, Stack } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 function FileUpload() {
@@ -52,37 +52,39 @@ function FileUpload() {
           type="file"
           onChange={handleFileUpload}
         />
-        <label htmlFor="raised-button-file">
+        
+        <Stack direction="row" spacing={2} alignItems="center" justifyContent="center">
+          <label htmlFor="raised-button-file">
+            <Button
+              variant="contained"
+              component="span"
+              startIcon={<CloudUploadIcon />}
+            >
+              Select CSV File
+            </Button>
+          </label>
+          
           <Button
             variant="contained"
-            component="span"
-            startIcon={<CloudUploadIcon />}
-            sx={{ mb: 2 }}
+            color="primary"
+            type="submit"
+            disabled={!file}
           >
-            Select CSV File
+            Upload
           </Button>
-        </label>
+        </Stack>
         
         {file && (
-          <Typography variant="body1" sx={{ mb: 2 }}>
+          <Typography variant="body1" sx={{ mt: 2 }}>
             Selected file: {file.name}
           </Typography>
         )}
         
         {error && (
-          <Alert severity="error" sx={{ mb: 2 }}>
+          <Alert severity="error" sx={{ mt: 2 }}>
             {error}
           </Alert>
         )}
-        
-        <Button
-          variant="contained"
-          color="primary"
-          type="submit"
-          disabled={!file}
-        >
-          Upload
-        </Button>
       </Box>
     </Box>
   );

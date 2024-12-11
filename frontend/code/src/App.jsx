@@ -6,7 +6,7 @@ import TradeStats from "./components/TradeStats";
 import TradesTable from "./components/TradesTable";
 import TradingCharts from "./components/TradingCharts";
 import LoginPage from "./Login";
-import Registration from "./register";
+import Registration from "./Register";
 import HomePage from "./HomePage";
 import "./App.css";
 

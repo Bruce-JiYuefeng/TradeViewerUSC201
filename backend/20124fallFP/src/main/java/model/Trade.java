@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 
 public class Trade {
     private Long tradeId;
+    private Long userId;
     private Integer instrumentId;
     private LocalDateTime dateTime;
     private String buySell;
@@ -26,6 +27,7 @@ public class Trade {
 
     // Getters and setters
     public Long getTradeId() { return tradeId; }
+    public Long getUserId() { return userId; }
     public Integer getInstrumentId() { return instrumentId; }
     public LocalDateTime getDateTime() { return dateTime; }
     public String getBuySell() { return buySell; }
@@ -33,4 +35,6 @@ public class Trade {
     public BigDecimal getPrice() { return price; }
     public BigDecimal getCommissions() { return commissions; }
     public BigDecimal getPnl() { return pnl; }
-} 
+
+    public void setUserId(Long userId) { this.userId = userId; }
+}

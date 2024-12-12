@@ -30,7 +30,7 @@ function FileUpload() {
 
     try {
       // TODO: Replace with your actual API endpoint
-      // const response = await axios.post('/api/upload', formData);
+      const response = await axios.post('/api/upload-csv', formData);
       console.log('File uploaded successfully');
     } catch (error) {
       setError('Error uploading file');

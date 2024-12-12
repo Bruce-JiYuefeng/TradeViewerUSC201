@@ -1,6 +1,8 @@
 package dao;
 
 import config.DatabaseConfig;
+import controller.User;
+
 //import model.UserDetails;
 import java.sql.*;
 
@@ -84,6 +86,26 @@ public class UserDao {
 			System.out.println("SQL error in UserDao.saveUser for username: " + username);
 		}
 		return false;
+	}
+
+	public User getUserByUsername(String username) {
+		String query = "SELECT user_id, name, password FROM users WHERE name = ?";
+	    try (Connection conn = DatabaseConfig.getConnection();
+	         PreparedStatement stmt = conn.prepareStatement(query)) {
+	        stmt.setString(1, username);
+	        ResultSet rs = stmt.executeQuery();
+	        if (rs.next()) {
+	            Long id = rs.getLong("user_id");  // retrieve the user ID
+	            String name = rs.getString("name");
+	            String password = rs.getString("password");
+	            return new User(id, name, password);  // return a User object with id
+	        }
+	    } 
+	    catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return null;  // return null if user is not found
+		
 	}
 
 	/**

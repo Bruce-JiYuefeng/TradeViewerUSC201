@@ -9,6 +9,16 @@
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>
 
+    <!-- Session Configuration -->
+    <session-config>
+        <session-timeout>30</session-timeout> <!-- Timeout after 30 minutes of inactivity -->
+        <cookie-config>
+            <http-only>true</http-only>
+            <secure>false</secure> <!-- Set to true only if running on HTTPS -->
+        </cookie-config>
+        <tracking-mode>COOKIE</tracking-mode>
+    </session-config>
+         
     <!-- Login Servlet Configuration -->
     <servlet>
         <servlet-name>LoginServlet</servlet-name>

@@ -73,7 +73,7 @@ const HomePage = () => {
             size="large"
             fullWidth
             sx={{ width: "200px", mt: 2 }}
-            onClick={() => navigate("/dashboard")}
+            onClick={() => navigate("/demo")}
           >
             View Demo
           </Button>

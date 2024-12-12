@@ -1,18 +1,11 @@
-import { useState } from "react"; // Add this import
-import { Routes, Route, Link } from "react-router-dom";
-import { Box, Container, CssBaseline, Button } from "@mui/material";
-import FileUpload from "./components/FileUpload";
+import { useState } from "react";
+import { Box, Container, Button } from "@mui/material";
+import { Link } from "react-router-dom";
 import TradeStats from "./components/TradeStats";
 import TradesTable from "./components/TradesTable";
 import TradingCharts from "./components/TradingCharts";
-import LoginPage from "./Login";
-import Registration from "./register";
-import HomePage from "./HomePage";
-import DemoPage from "./DemoPage";
-import "./App.css";
 
-function Dashboard() {
-  // Initialize trades state with the sample data
+function DemoPage() {
   const [trades, setTrades] = useState([
     {
       id: 1,
@@ -79,7 +72,6 @@ function Dashboard() {
       </Box>
       <Container maxWidth="lg">
         <Box sx={{ my: 4 }}>
-          <FileUpload />
           <TradeStats />
           <TradesTable trades={trades} onDeleteTrade={handleDeleteTrade} />
           <TradingCharts trades={trades} />
@@ -89,19 +81,4 @@ function Dashboard() {
   );
 }
 
-function App() {
-  return (
-    <>
-      <CssBaseline />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/Register" element={<Registration />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/demo" element={<DemoPage />} />
-      </Routes>
-    </>
-  );
-}
-
-export default App;
+export default DemoPage;

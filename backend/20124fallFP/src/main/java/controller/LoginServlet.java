@@ -4,10 +4,11 @@ import com.google.gson.Gson;
 import model.UserRequest;
 import services.UserService;
 
-import jakarta.servlet.annotation.WebServlet;
+//import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -20,7 +21,8 @@ import java.util.logging.Logger;
  */
 //@WebServlet("/login")
 public class LoginServlet extends HttpServlet {
-    private static final Logger LOGGER = Logger.getLogger(LoginServlet.class.getName());
+    private static final long serialVersionUID = 1;
+	private static final Logger LOGGER = Logger.getLogger(LoginServlet.class.getName());
     private final UserService userService = new UserService();
 
     @Override
@@ -50,6 +52,13 @@ public class LoginServlet extends HttpServlet {
             // Send JSON response
             PrintWriter out = resp.getWriter();
             if (isValid) {
+            	// added for storing userID
+            	User user = userService.getUserByUsername(userRequest.getUsername());
+            	HttpSession session = req.getSession();
+            	session.setAttribute("userId", user.getId());
+            	LOGGER.info("Session ID: " + req.getSession().getId()); // added for debugging
+            	LOGGER.info("userId stored in session: " + user.getId()); // added for debugging
+            	
                 LOGGER.info("Login successful for user: " + userRequest.getUsername()); // Debug message
                 out.print("{\"status\": \"success\", \"message\": \"Login successful\"}");
             } else {

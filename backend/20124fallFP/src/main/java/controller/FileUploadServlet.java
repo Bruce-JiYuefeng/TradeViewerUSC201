@@ -29,6 +29,8 @@ public class FileUploadServlet extends HttpServlet {
         try {
             // Get user_id from session
             Long userId = (Long) request.getSession().getAttribute("userId");
+            LOGGER.info("Session ID: " + request.getSession().getId()); // added for debugging
+            LOGGER.info("userId stored in session: " + userId); // added for debugging
             if (userId == null) {
                 throw new IllegalStateException("User not logged in");
             }

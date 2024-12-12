@@ -44,4 +44,8 @@ public class UserService {
 		}
 		return userDao.saveUser(username, password);
 	}
+	//added
+	public User getUserByUsername(String username) {
+		return userDao.getUserByUsername(username);
+	}
 }

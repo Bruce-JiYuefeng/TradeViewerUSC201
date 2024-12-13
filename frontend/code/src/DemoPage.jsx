@@ -73,7 +73,7 @@ function DemoPage() {
       <Container maxWidth="lg">
         <Box sx={{ my: 4 }}>
           <TradeStats />
-          <TradesTable trades={trades} onDeleteTrade={handleDeleteTrade} />
+          <TradesTable trades={trades} />
           <TradingCharts trades={trades} />
         </Box>
       </Container>

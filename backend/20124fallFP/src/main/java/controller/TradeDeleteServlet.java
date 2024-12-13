@@ -1,40 +1,43 @@
 package controller;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import services.TradeService;
+import com.google.gson.Gson;
 
-@WebServlet("/api/trades/*")
+//@WebServlet("/tradesDelete")
 public class TradeDeleteServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private TradeService tradeService;
 
     @Override
     public void init() throws ServletException {
-        tradeService = new TradeService(); // Initialize your service here
+        tradeService = new TradeService(); 
     }
 
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String pathInfo = request.getPathInfo();
-        if (pathInfo == null || pathInfo.equals("/")) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Trade ID is missing");
-            return;
+        // Read JSON request body
+        BufferedReader reader = request.getReader();
+        StringBuilder json = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            json.append(line);
         }
 
-        String[] pathParts = pathInfo.split("/");
-        if (pathParts.length != 2) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid Trade ID");
-            return;
-        }
+        // Deserialize JSON to extract tradeId and state
+        Gson gson = new Gson();
+        TradeDeleteRequest deleteRequest = gson.fromJson(json.toString(), TradeDeleteRequest.class);
+        long tradeId = deleteRequest.getTradeId();
+        String state = deleteRequest.getState();
 
-        try {
-            long tradeId = Long.parseLong(pathParts[1]);
+        if ("delete".equals(state)) {
             boolean isDeleted = tradeService.deleteTradeById(tradeId);
 
             if (isDeleted) {
@@ -42,8 +45,30 @@ public class TradeDeleteServlet extends HttpServlet {
             } else {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND, "Trade not found");
             }
-        } catch (NumberFormatException e) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid Trade ID format");
+        } else {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid request state");
+        }
+    }
+
+    // Add a new class to represent the delete request
+    class TradeDeleteRequest {
+        private long tradeId;
+        private String state;
+
+        public long getTradeId() {
+            return tradeId;
+        }
+
+        public void setTradeId(long tradeId) {
+            this.tradeId = tradeId;
+        }
+
+        public String getState() {
+            return state;
+        }
+
+        public void setState(String state) {
+            this.state = state;
         }
     }
 }

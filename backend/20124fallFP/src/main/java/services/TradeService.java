@@ -5,6 +5,7 @@ import model.Trade;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.logging.Level;
+import java.sql.SQLException;
 
 public class TradeService {
     private static final Logger LOGGER = Logger.getLogger(TradeService.class.getName());
@@ -29,6 +30,11 @@ public class TradeService {
     }
 
     public boolean deleteTradeById(long tradeId) {
-        return tradeDao.deleteTrade(tradeId);
+        try {
+            return tradeDao.deleteTrade(tradeId);
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Error deleting trade with ID: " + tradeId, e);
+            return false;
+        }
     }
 } 

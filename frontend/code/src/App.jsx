@@ -27,15 +27,17 @@ function Dashboard() {
   }, []);
 
   const handleDeleteTrade = (tradeId) => {
-    // Send DELETE request to the backend
-    axios.delete(`/api/trades/${tradeId}`)
-      .then(() => {
-        // Update the state to remove the trade locally
-        setTrades(trades.filter((trade) => trade.id !== tradeId));
-      })
-      .catch(error => {
-        console.error("There was an error deleting the trade!", error);
-      });
+    // Send DELETE request with JSON payload
+    axios.delete('/api/tradesDelete', {
+      data: { tradeId: tradeId, state: "delete" }
+    })
+    .then(() => {
+      // Update the state to remove the trade locally
+      setTrades(trades.filter((trade) => trade.id !== tradeId));
+    })
+    .catch(error => {
+      console.error("There was an error deleting the trade!", error);
+    });
   };
 
   return (

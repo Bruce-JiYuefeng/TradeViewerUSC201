@@ -75,7 +75,7 @@ public class TradeDao {
     }
 
     public boolean deleteTrade(long tradeId) throws SQLException {
-        String query = "DELETE FROM trades WHERE id = ?";
+        String query = "DELETE FROM trades WHERE trade_id = ?";
         
         try (Connection conn = DatabaseConfig.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {

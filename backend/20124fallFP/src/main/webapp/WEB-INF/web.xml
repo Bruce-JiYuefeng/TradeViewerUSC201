@@ -26,14 +26,24 @@
     </servlet>
 
     <servlet>
-    <servlet-name>FileUploadServlet</servlet-name>
+        <servlet-name>FileUploadServlet</servlet-name>
         <servlet-class>controller.FileUploadServlet</servlet-class>
     </servlet>
 
+    <servlet>
+        <servlet-name>TradeDeleteServlet</servlet-name>
+        <servlet-class>controller.TradeDeleteServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>TradeDeleteServlet</servlet-name>
+        <url-pattern>/tradesDelete</url-pattern> 
+    </servlet-mapping>
+
     <servlet-mapping>
         <servlet-name>FileUploadServlet</servlet-name>
-    <url-pattern>/upload-csv</url-pattern> 
-</servlet-mapping>
+        <url-pattern>/upload-csv</url-pattern> 
+    </servlet-mapping>
     
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>

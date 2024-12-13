@@ -8,6 +8,7 @@
 
 ### 1. Download Apache Maven
 - Download Apache Maven 3.9.9 from the official website: [Maven Downloads](https://maven.apache.org/download.cgi)
+- Download Tomcat 10.1 from the official website: [Tomcat10.1 Downloads]([https://maven.apache.org/download.cgi](https://tomcat.apache.org/download-10.cgi#10.1.34))
 
 ---
 

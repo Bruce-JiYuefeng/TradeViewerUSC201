@@ -30,7 +30,7 @@ public class DatabaseConfig {
 			throw new SQLException("MySQL JDBC Driver not found", e);
 		}
 		Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-        System.out.println("Database connected successfully!（DatabaseConfig）"); // Debug message
+        //System.out.println("Database connected successfully!（DatabaseConfig）"); // Debug message
         return conn;
     }
 }

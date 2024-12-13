@@ -1,6 +1,6 @@
 This is the workspace for backend.
 
-If you just clone the repo. please clean up this folder and then import the project from repo/release to here. 
+If you just clone the repo. please clean up this folder except README.md and then import the project from repo/release to here. 
 To set up: download maven, get tomcat ready, paste two json files into the tomcat/lib.
 
 You should be able to see the default page when you run project on the tomcat.

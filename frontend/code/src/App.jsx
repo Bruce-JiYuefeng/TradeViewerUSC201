@@ -80,7 +80,7 @@ function Dashboard() {
       <Container maxWidth="lg">
         <Box sx={{ my: 4 }}>
           <FileUpload />
-          <TradeStats />
+          <TradeStats trades={trades} />
           <TradesTable trades={trades} onDeleteTrade={handleDeleteTrade} />
           <TradingCharts trades={trades} />
         </Box>

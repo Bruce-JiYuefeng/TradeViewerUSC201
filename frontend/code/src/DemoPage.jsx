@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Box, Container, Button } from "@mui/material";
 import { Link } from "react-router-dom";
-import TradeStats from "./components/TradeStats";
+import TradeStats from "./components/DemoTradeStats";
 import TradesTable from "./components/TradesTable";
 import TradingCharts from "./components/TradingCharts";
 

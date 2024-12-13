@@ -6,6 +6,4 @@ To set up: download maven, get tomcat ready, paste two json files into the tomca
 You should be able to see the default page when you run project on the tomcat.
 note: the version of tomcat is Tomcat10.1
 
-when you navigate to the link to login page it should show 405 error. It is what it should be.
-
-Once you run the project, the page pops up. You should be able to use the page you opened in the frontend now. 
+Once you run the project and the page pops up, you should be able to use the page you opened in the frontend now. 

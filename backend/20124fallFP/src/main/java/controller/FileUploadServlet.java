@@ -1,6 +1,7 @@
 package controller;
 
 import model.Trade;
+import model.TradeDTO;
 import services.TradeService;
 import util.TradeParser;
 //import jakarta.servlet.annotation.WebServlet;
@@ -13,6 +14,9 @@ import java.io.*;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.logging.Level;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 //@WebServlet("/upload-csv")
 @MultipartConfig
@@ -63,6 +67,17 @@ public class FileUploadServlet extends HttpServlet {
             } else {
                 throw new Exception("Failed to save trades");
             }
+            
+//            List<Trade> getTrade = tradeService.getTradesByUserId(userId);
+//            List<TradeDTO> tradeDTOs = tradeService.convertToDTO(getTrade);
+//            
+//            Gson gson = new GsonBuilder()
+//            		//.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
+//            		.create();
+//            String jsonResponse = gson.toJson(tradeDTOs);
+//            LOGGER.info("Sending saved trades to frontend.");
+//            out.println(jsonResponse);
+//            LOGGER.info("trades: " + jsonResponse);
 
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Error processing CSV upload", e);

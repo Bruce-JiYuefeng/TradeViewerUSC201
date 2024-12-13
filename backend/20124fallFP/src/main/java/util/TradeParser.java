@@ -35,7 +35,7 @@ public class TradeParser {
                         values[2].trim(),                        // buy_sell
                         new BigDecimal(values[3].trim()),        // quantity
                         new BigDecimal(values[4].trim()),        // price
-                        new BigDecimal(values[5].trim()),        // commissions
+                        new BigDecimal(values[5].trim()),        // priceout
                         values[6].trim().isEmpty() ? null : new BigDecimal(values[6].trim()) // pnl
                     );
                     trade.setUserId(userId);

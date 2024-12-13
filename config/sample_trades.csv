@@ -1,4 +1,4 @@
-instrument_id,date_time,buy_sell,quantity,price,commissions,pnl
+instrument_id,date_time,buy_sell,quantity,price,price_out,pnl
 1,2024-12-11 09:30:00,buy,100.00,450.25,1.50,
 1,2024-12-11 10:15:00,sell,100.00,452.75,1.50,200.00
 2,2024-12-11 11:00:00,buy,50.00,380.00,1.00,

@@ -16,14 +16,28 @@ function Dashboard() {
   const [trades, setTrades] = useState([]);
 
   useEffect(() => {
-    // Fetch trades data from the backend
-    axios.get('/api/upload-csv')
+    const fetchTrades = () => {
+      const userId = localStorage.getItem("userId"); // Retrieve userId from localStorage
+      if (!userId) {
+        console.error("User ID not found");
+        return;
+      }
+
+      axios.get('/api/refresh-trades', {
+        headers: { 'userId': userId }
+      })
       .then(response => {
         setTrades(response.data);
       })
       .catch(error => {
         console.error("There was an error fetching the trades data!", error);
       });
+    };
+
+    fetchTrades(); // Initial fetch
+    const intervalId = setInterval(fetchTrades, 3000); // Fetch every 60 seconds
+
+    return () => clearInterval(intervalId); // Cleanup on component unmount
   }, []);
 
   const handleDeleteTrade = (tradeId) => {

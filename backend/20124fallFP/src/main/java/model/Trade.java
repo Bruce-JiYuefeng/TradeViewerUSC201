@@ -11,17 +11,17 @@ public class Trade {
     private String buySell;
     private BigDecimal quantity;
     private BigDecimal price;
-    private BigDecimal commissions;
+    private BigDecimal price_out;
     private BigDecimal pnl;
 
     public Trade(Integer instrumentId, LocalDateTime dateTime, String buySell,
-                BigDecimal quantity, BigDecimal price, BigDecimal commissions, BigDecimal pnl) {
+                BigDecimal quantity, BigDecimal price, BigDecimal price_out, BigDecimal pnl) {
         this.instrumentId = instrumentId;
         this.dateTime = dateTime;
         this.buySell = buySell;
         this.quantity = quantity;
         this.price = price;
-        this.commissions = commissions;
+        this.price_out = price_out;
         this.pnl = pnl;
     }
 
@@ -33,8 +33,9 @@ public class Trade {
     public String getBuySell() { return buySell; }
     public BigDecimal getQuantity() { return quantity; }
     public BigDecimal getPrice() { return price; }
-    public BigDecimal getCommissions() { return commissions; }
+    public BigDecimal getpriceOut() { return price_out; }
     public BigDecimal getPnl() { return pnl; }
 
     public void setUserId(Long userId) { this.userId = userId; }
+    public void setTradeId(Long tradeId) {this.tradeId = tradeId;}
 }

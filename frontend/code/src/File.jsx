@@ -56,14 +56,23 @@ const FileUpload = () => {
       const formData = new FormData();
       formData.append("file", selectedFile);
 
-      // Example API call - replace with your actual endpoint
-      const response = await fetch("/api/upload-csv", {
+      const userId = localStorage.getItem("userId");
+      if (!userId) {
+        setError('User not logged in');
+        return;
+      }
+
+      const response = await fetch("/upload-csv", {
         method: "POST",
         body: formData,
+        headers: {
+          'userId': userId
+        }
       });
 
       if (!response.ok) {
-        throw new Error("Failed to upload file");
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to upload file");
       }
 
       const data = await response.json();
@@ -76,7 +85,7 @@ const FileUpload = () => {
         throw new Error(data.error || "Invalid CSV format");
       }
     } catch (err) {
-      setError(err.message);
+      setError(`Error uploading file: ${err.message}`);
       setSelectedFile(null);
     } finally {
       setLoading(false);

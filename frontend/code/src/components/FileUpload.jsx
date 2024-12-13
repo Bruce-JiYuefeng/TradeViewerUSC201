@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Button, Box, Typography, Alert, Stack } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import axios from 'axios';
 
 function FileUpload() {
   const [file, setFile] = useState(null);
@@ -27,13 +28,27 @@ function FileUpload() {
 
     const formData = new FormData();
     formData.append('file', file);
+    
+    const userId = localStorage.getItem("userId");
+    if (!userId) {
+      setError('User not logged in');
+      return;
+    }
 
     try {
-      // TODO: Replace with your actual API endpoint
-      const response = await axios.post('/api/upload-csv', formData);
-      console.log('File uploaded successfully');
+      const response = await axios.post('/upload-csv', formData, {
+        headers: {
+          'userId': userId
+        }
+      });
+
+      if (response.status === 200) {
+        console.log('File uploaded successfully');
+      } else {
+        throw new Error('Failed to upload file');
+      }
     } catch (error) {
-      setError('Error uploading file');
+      setError(`Error uploading file: ${error.response?.data?.message || error.message}`);
       console.error('Error:', error);
     }
   };

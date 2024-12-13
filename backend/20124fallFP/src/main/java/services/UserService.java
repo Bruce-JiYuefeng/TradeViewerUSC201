@@ -1,6 +1,7 @@
 package services;
 
 import dao.UserDao;
+import controller.User;
 import exceptions.UsernameAlreadyExistsException;
 
 /**

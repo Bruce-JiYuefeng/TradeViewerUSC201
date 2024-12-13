@@ -55,6 +55,7 @@ const LoginPage = () => {
       const data = await response.json();
 
       if (data.status === "success") {
+        localStorage.setItem("userId", data.userId);
         // Login successful, navigate to dashboard
         navigate("/dashboard");
       } 

@@ -58,6 +58,7 @@ const LoginPage = () => {
 
       if (data.status === "success") {
         // Login successful, navigate to dashboard
+        localStorage.setItem("userId", data.userId);
         navigate("/dashboard");
       } else {
         // Login failed, show error message

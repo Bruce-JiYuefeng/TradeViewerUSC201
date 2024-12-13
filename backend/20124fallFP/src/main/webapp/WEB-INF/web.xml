@@ -25,15 +25,15 @@
         <servlet-class>controller.LoginServlet</servlet-class>
     </servlet>
 
-    <servlet>
-    <servlet-name>FileUploadServlet</servlet-name>
+    <!-- <servlet>
+        <servlet-name>FileUploadServlet</servlet-name>
         <servlet-class>controller.FileUploadServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
         <servlet-name>FileUploadServlet</servlet-name>
-    <url-pattern>/api/upload-csv</url-pattern>
-</servlet-mapping>
+        <url-pattern>/upload-csv</url-pattern>
+    </servlet-mapping> -->
     
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>

@@ -60,7 +60,7 @@ public class LoginServlet extends HttpServlet {
             	LOGGER.info("userId stored in session: " + user.getId()); // added for debugging
             	
                 LOGGER.info("Login successful for user: " + userRequest.getUsername()); // Debug message
-                out.print("{\"status\": \"success\", \"message\": \"Login successful\"}");
+                out.print("{\"status\": \"success\", \"message\": \"Login successful\", \"userId\": \"" + user.getId() + "\"}");
             } else {
                 LOGGER.warning("Invalid login attempt for user: " + userRequest.getUsername()); // Debug message
                 out.print("{\"status\": \"error\", \"message\": \"Invalid username or password\"}");

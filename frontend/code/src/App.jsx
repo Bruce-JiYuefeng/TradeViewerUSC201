@@ -17,7 +17,7 @@ function Dashboard() {
 
   useEffect(() => {
     // Fetch trades data from the backend
-    axios.get('/api//upload-csv')
+    axios.get('/api/upload-csv')
       .then(response => {
         setTrades(response.data);
       })
@@ -27,7 +27,15 @@ function Dashboard() {
   }, []);
 
   const handleDeleteTrade = (tradeId) => {
-    setTrades(trades.filter((trade) => trade.id !== tradeId));
+    // Send DELETE request to the backend
+    axios.delete(`/api/trades/${tradeId}`)
+      .then(() => {
+        // Update the state to remove the trade locally
+        setTrades(trades.filter((trade) => trade.id !== tradeId));
+      })
+      .catch(error => {
+        console.error("There was an error deleting the trade!", error);
+      });
   };
 
   return (

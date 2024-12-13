@@ -27,4 +27,8 @@ public class TradeService {
             return null;
         }
     }
+
+    public boolean deleteTradeById(long tradeId) {
+        return tradeDao.deleteTrade(tradeId);
+    }
 } 

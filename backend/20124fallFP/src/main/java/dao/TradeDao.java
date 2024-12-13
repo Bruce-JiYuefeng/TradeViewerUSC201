@@ -73,4 +73,20 @@ public class TradeDao {
         }
         return trades;
     }
+
+    public boolean deleteTrade(long tradeId) throws SQLException {
+        String query = "DELETE FROM trades WHERE id = ?";
+        
+        try (Connection conn = DatabaseConfig.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            
+            stmt.setLong(1, tradeId);
+            int affectedRows = stmt.executeUpdate();
+            
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Error deleting trade with ID: " + tradeId, e);
+            throw e;
+        }
+    }
 }

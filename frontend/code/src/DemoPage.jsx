@@ -28,7 +28,7 @@ function DemoPage() {
       profitLoss: -2500,
     },
     {
-      id: 3,
+      id: 5,
       date: "2024-02-01",
       symbol: "TSLA",
       type: "Sell",
@@ -48,7 +48,7 @@ function DemoPage() {
       profitLoss: 750,
     },
     {
-      id: 5,
+      id: 3,
       date: "2024-03-01",
       symbol: "MSFT",
       type: "Buy",

@@ -62,7 +62,7 @@ const FileUpload = () => {
         return;
       }
 
-      const response = await fetch("/upload-csv", {
+      const response = await fetch("/api/upload-csv", {
         method: "POST",
         body: formData,
         headers: {

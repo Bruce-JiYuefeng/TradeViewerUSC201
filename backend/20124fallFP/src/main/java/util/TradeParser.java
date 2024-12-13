@@ -38,6 +38,7 @@ public class TradeParser {
                         new BigDecimal(values[5].trim()),        // commissions
                         values[6].trim().isEmpty() ? null : new BigDecimal(values[6].trim()) // pnl
                     );
+                    trade.setUserId(userId);
                     trades.add(trade);
                 } catch (Exception e) {
                     // Log error but continue processing other lines

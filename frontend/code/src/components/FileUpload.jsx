@@ -36,7 +36,7 @@ function FileUpload() {
     }
 
     try {
-      const response = await axios.post('/upload-csv', formData, {
+      const response = await axios.post('/api/upload-csv', formData, {
         headers: {
           'userId': userId
         }

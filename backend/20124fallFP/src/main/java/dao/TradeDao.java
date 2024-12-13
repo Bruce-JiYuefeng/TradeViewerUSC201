@@ -17,8 +17,9 @@ public class TradeDao {
                       
         try (Connection conn = DatabaseConfig.getConnection()) {
             conn.setAutoCommit(false);
-            
+            //System.out.println("check 1 in tradeDAO");
             try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            	//System.out.println("check 2 in tradeDAO");
                 for (Trade trade : trades) {
                     stmt.setInt(1, trade.getInstrumentId());
                     stmt.setLong(2, trade.getUserId());

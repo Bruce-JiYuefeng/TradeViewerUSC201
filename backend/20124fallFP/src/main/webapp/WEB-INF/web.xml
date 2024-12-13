@@ -8,7 +8,7 @@
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>
-
+    
     <!-- Session Configuration -->
     <session-config>
         <session-timeout>30</session-timeout> <!-- Timeout after 30 minutes of inactivity -->
@@ -18,22 +18,22 @@
         </cookie-config>
         <tracking-mode>COOKIE</tracking-mode>
     </session-config>
-         
+	
     <!-- Login Servlet Configuration -->
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>controller.LoginServlet</servlet-class>
     </servlet>
 
-    <!-- <servlet>
-        <servlet-name>FileUploadServlet</servlet-name>
+    <servlet>
+    <servlet-name>FileUploadServlet</servlet-name>
         <servlet-class>controller.FileUploadServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
         <servlet-name>FileUploadServlet</servlet-name>
-        <url-pattern>/upload-csv</url-pattern>
-    </servlet-mapping> -->
+    <url-pattern>/upload-csv</url-pattern> 
+</servlet-mapping>
     
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>

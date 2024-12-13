@@ -3,7 +3,7 @@ package controller;
 import model.Trade;
 import services.TradeService;
 import util.TradeParser;
-import jakarta.servlet.annotation.WebServlet;
+//import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,10 +14,11 @@ import java.util.List;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
-@WebServlet("/upload-csv")
+//@WebServlet("/upload-csv")
 @MultipartConfig
 public class FileUploadServlet extends HttpServlet {
-    private static final Logger LOGGER = Logger.getLogger(FileUploadServlet.class.getName());
+    private static final long serialVersionUID = 1L;
+	private static final Logger LOGGER = Logger.getLogger(FileUploadServlet.class.getName());
     private final TradeService tradeService = new TradeService();
 
     @Override
@@ -27,20 +28,26 @@ public class FileUploadServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         try {
-            // Get user_id from headers
-            String userIdHeader = request.getHeader("userId");
-            Long userId = userIdHeader != null ? Long.parseLong(userIdHeader) : null;
-            LOGGER.info("Received userId: " + userId);
+            // Get user_id from headers (session)
+        	String userIdHeader = request.getHeader("userId"); // added 
+        	Long userId = userIdHeader != null ? Long.parseLong(userIdHeader) : null;
+            //Long userId = (Long) request.getSession().getAttribute("userId");
+            //LOGGER.info("Session ID: " + request.getSession().getId()); // added for debugging
+            //LOGGER.info("userId stored in session: " + userId);
+        	LOGGER.info("Received userId: " + userId);
             if (userId == null) {
                 throw new IllegalStateException("User not logged in");
             }
 
             Part filePart = request.getPart("file");
-            if (filePart == null) {
-                throw new IllegalArgumentException("File part is missing");
+            
+            //added
+            if(filePart ==  null) {
+            	throw new IllegalArgumentException("File part is missing");
             }
             LOGGER.info("Received file: " + filePart.getSubmittedFileName());
-
+            // end of added 
+            
             if (!filePart.getSubmittedFileName().toLowerCase().endsWith(".csv")) {
                 throw new IllegalArgumentException("Only CSV files are allowed");
             }
@@ -59,7 +66,7 @@ public class FileUploadServlet extends HttpServlet {
 
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Error processing CSV upload", e);
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             out.println("{\"status\":\"error\",\"message\":\"" + e.getMessage() + "\"}");
         }
     }

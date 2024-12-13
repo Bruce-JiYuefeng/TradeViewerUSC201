@@ -6,6 +6,7 @@ package model;
 public class UserRequest {
     private String username; // Maps to the `name` column in the database
     private String password;
+    private Long id;
 
     public String getUsername() {
         return username;
@@ -21,5 +22,12 @@ public class UserRequest {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+        this.id = id;
     }
 }

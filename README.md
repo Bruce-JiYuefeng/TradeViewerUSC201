@@ -49,7 +49,7 @@
      ```
    - Start the server and access the web application at:
      ```
-     http://localhost:8080/20124fallFP
+     http://localhost:(your tomcat port, default should be 8080)/20124fallFP
      ```
 3. ** *Optional*: You can also try right-clicking the project in Eclipse IDE and selecting **Run on Tomcat** (much faster and easier).**
 

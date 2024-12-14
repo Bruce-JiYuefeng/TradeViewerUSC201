@@ -4,6 +4,50 @@
 
 ---
 
+## Frontend Setup
+
+### 1. Install Dependencies
+1. **Ensure Node.js is Installed**:
+   - Download and install the latest LTS version of Node.js from the official website: [Node.js Downloads](https://nodejs.org/).
+2. **Navigate to the Frontend Directory**:
+   - Open your terminal and navigate to the `frontend/code` directory:
+     ```
+     cd frontend/code
+     ```
+3. **Install Required Packages**:
+   - Run the following commands in the terminal:
+     ```
+     npm install
+     npm install lottie-react
+     ```
+
+---
+
+### 2. Start the Frontend Development Server
+1. **Run the Development Server**:
+   - Start the server by running:
+     ```
+     npm run dev
+     ```
+2. **Access the Application**:
+   - Follow the link displayed in the terminal output to view the frontend application in your browser. The default URL should look like:
+     ```
+     http://localhost:(your Vite port, default is 5173)
+     ```
+
+---
+
+### 3. Prerequisites for Full Functionality
+1. **Backend Connection**:
+   - Ensure the backend server is running before interacting with backend-dependent features.
+   - Refer to the **Backend Setup** section for instructions on setting up and running the backend.
+
+2. **Verify Compatibility**:
+   - Use a browser like Chrome, Edge, or Firefox for the best experience.
+
+---
+
+
 ## Backend Setup
 
 ### 1. Download Apache Maven
